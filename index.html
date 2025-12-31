@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wise Examer - Self Assessment Test</title>
+    <!-- HTML2Canvas Library for JPEG Download -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            padding: 10px;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+            }
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+                gap: 10px;
+            }
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
+            color: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .header p {
+                font-size: 0.9rem;
+                padding: 0 5px;
+            }
+        }
+        
+        .timer {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .timer {
+                padding: 12px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        .timer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+            animation: timerLine 30s linear forwards;
+        }
+        
+        @keyframes timerLine {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+        
+        .form-section {
+            padding: 25px;
+            background: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .form-section {
+                padding: 20px;
+            }
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid transparent;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            animation: slideUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-group label {
+                font-size: 0.95rem;
+            }
+        }
+        
+        .form-group label i {
+            color: #3498db;
+            width: 18px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .form-group input {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-group input::placeholder {
+            color: #95a5a6;
+            font-size: 0.95rem;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #27ae60, #219653);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-start {
+            padding: 18px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            
+            .btn-start {
+                padding: 16px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            display: block;
+            margin: 30px auto;
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+            width: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .btn-submit {
+                padding: 16px 40px;
+                font-size: 1.1rem;
+                margin: 25px auto;
+                width: 90%;
+            }
+        }
+        
+        .question-container {
+            padding: 20px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .question-container {
+                padding: 15px;
+            }
+        }
+        
+        .question-box {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .question-box {
+                padding: 15px;
+                margin-bottom: 12px;
+                border-left-width: 3px;
+            }
+        }
+        
+        .question-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3498db, #2ecc71);
+        }
+        
+        .question-number {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .question-number {
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+            }
+        }
+        
+        .question-number span:first-child {
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #2c3e50;
+            font-weight: 500;
+            word-wrap: break-word;
+        }
+        
+        @media (max-width: 768px) {
+            .question-text {
+                font-size: 1rem;
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+        }
+        
+        .options {
+            margin-left: 5px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e8f4fc;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .option {
+                padding: 10px;
+                margin-bottom: 8px;
+                min-height: 45px;
+            }
+        }
+        
+        .option::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1));
+            transition: width 0.3s;
+        }
+        
+        .option:hover {
+            border-color: #3498db;
+        }
+        
+        .option:hover::before {
+            width: 100%;
+        }
+        
+        .option.selected {
+            background: linear-gradient(90deg, #e3f2fd, #e8f5e9);
+            border-color: #27ae60;
+            box-shadow: 0 3px 8px rgba(39, 174, 96, 0.2);
+        }
+        
+        .option input {
+            margin-right: 12px;
+            transform: scale(1.1);
+            min-width: 18px;
+        }
+        
+        .option label {
+            cursor: pointer;
+            font-size: 0.95rem;
+            line-height: 1.3;
+            word-wrap: break-word;
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .option label {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .result-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        
+        @media (max-width: 768px) {
+            .result-section {
+                padding: 20px;
+            }
+        }
+        
+        .score-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .score-card {
+                padding: 20px;
+                border-radius: 15px;
+            }
+        }
+        
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #9b59b6, #e74c3c);
+        }
+        
+        .score-card h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .score-card h2 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+            }
+        }
+        
+        .score-card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+        
+        .score-circle-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .score-circle-container {
+                width: 150px;
+                height: 150px;
+                margin-bottom: 25px;
+            }
+        }
+        
+        .score-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#27ae60 0% 85%, #e0e0e0 85% 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
+        }
+        
+        .score-circle-inner {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .score-circle-inner {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            line-height: 1;
+            background: linear-gradient(135deg, #27ae60, #219653);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        @media (max-width: 768px) {
+            .score-value {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .score-percentage {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #27ae60;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .score-percentage {
+                font-size: 1.2rem;
+            }
+        }
+        
+        .student-info {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+            border: 1px solid #e8f4fc;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .student-info {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+        }
+        
+        .student-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3498db, #2ecc71);
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e8f4fc;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+            }
+        }
+        
+        .info-row:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .info-label {
+                font-size: 0.95rem;
+                width: 100%;
+            }
+        }
+        
+        .info-label i {
+            color: #3498db;
+            width: 18px;
+            font-size: 0.9rem;
+        }
+        
+        .info-value {
+            color: #34495e;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: right;
+            padding: 8px 15px;
+            background: #e8f4fc;
+            border-radius: 8px;
+            min-width: 150px;
+            word-break: break-word;
+        }
+        
+        @media (max-width: 768px) {
+            .info-value {
+                text-align: left;
+                min-width: 100%;
+                width: 100%;
+                font-size: 0.95rem;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+        }
+        
+        .controller {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e8f4fc;
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .controller {
+                font-size: 0.9rem;
+                margin-top: 25px;
+                padding-top: 15px;
+            }
+        }
+        
+        .controller i {
+            color: #e74c3c;
+            font-size: 1.2rem;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .download-btn {
+                padding: 14px 30px;
+                font-size: 1rem;
+                margin-top: 20px;
+                width: 90%;
+            }
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Mobile-specific fixes */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background: #2c5364;
+            }
+            
+            .container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            .question-text {
+                font-size: 0.95rem;
+            }
+            
+            .option label {
+                font-size: 0.85rem;
+            }
+            
+            .score-value {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* Landscape mode optimization */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .form-section,
+            .question-container,
+            .result-section {
+                padding: 15px;
+            }
+            
+            .question-box {
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+            
+            .option {
+                padding: 8px;
+                min-height: 40px;
+                margin-bottom: 5px;
+            }
+            
+            .student-info {
+                padding: 15px;
+            }
+            
+            .info-row {
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+            }
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            color: #333;
+            max-width: 300px;
+            width: 90%;
+        }
+        
+        @media (max-width: 768px) {
+            .loading-content {
+                padding: 20px;
+                max-width: 250px;
+            }
+        }
+        
+        /* Navigation buttons for questions */
+        .question-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .nav-btn-prev {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+        
+        /* Question counter */
+        .question-counter {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <i class="fas fa-spinner fa-spin fa-3x" style="color: #3498db; margin-bottom: 20px;"></i>
+            <h3>Generating Score Card...</h3>
+            <p>Please wait while we create your JPEG score card</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-graduation-cap logo-icon"></i>
+                    Wise Examer
+                </h1>
+                <p>Self Assessment Test - Units and Measurement</p>
+            </div>
+        </div>
+        
+        <!-- Timer Section -->
+        <div class="timer" id="timer">
+            Time Remaining: <span id="time">30:00</span>
+        </div>
+        
+        <!-- Student Information Form -->
+        <div class="form-section" id="studentForm">
+            <h2 class="section-title">Student Information</h2>
+            <form id="infoForm">
+                <div class="form-group">
+                    <label for="studentName">
+                        <i class="fas fa-user"></i> Full Name *
+                    </label>
+                    <input type="text" id="studentName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentClass">
+                        <i class="fas fa-graduation-cap"></i> Class/Grade *
+                    </label>
+                    <input type="text" id="studentClass" placeholder="Example: Class 12, NEET Aspirant, etc." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rollNo">
+                        <i class="fas fa-id-card"></i> Roll Number *
+                    </label>
+                    <input type="text" id="rollNo" placeholder="Enter your roll number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="institution">
+                        <i class="fas fa-school"></i> School/College/Institution *
+                    </label>
+                    <input type="text" id="institution" placeholder="Enter institution name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email Address (Optional)
+                    </label>
+                    <input type="email" id="email" placeholder="Enter email for result copy">
+                </div>
+                
+                <button type="button" class="btn btn-start" id="startTest">
+                    <i class="fas fa-play-circle"></i> Start Assessment Test
+                </button>
+            </form>
+        </div>
+        
+        <!-- Test Section -->
+        <div class="question-container" id="testSection">
+            <h2 class="section-title">Units and Measurement</h2>
+            <div class="question-counter" id="questionCounter">
+                Question: <span id="currentQuestion">1</span> of 30
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div id="questionsContainer">
+                <!-- Questions will be loaded here by JavaScript -->
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="question-nav">
+                <button class="nav-btn nav-btn-prev" id="prevBtn" onclick="previousQuestion()">
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-submit" id="submitTest">
+                    <i class="fas fa-paper-plane"></i> Submit Test
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Result Section -->
+        <div class="result-section" id="resultSection">
+            <div class="score-card" id="scoreCard">
+                <h2><i class="fas fa-award"></i> Assessment Score Card</h2>
+                
+                <div class="score-circle-container">
+                    <div class="score-circle">
+                        <div class="score-circle-inner">
+                            <div class="score-value" id="finalScore">0</div>
+                            <div class="score-percentage">%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="student-info">
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-user"></i> Student Name:
+                        </div>
+                        <div class="info-value" id="resultName">-</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-graduation-cap"></i> Class:
+                        </div>
+                        <div class="info-value" id="resultClass">-</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-id-card"></i> Roll Number:
+                        </div>
+                        <div class="info-value" id="resultRoll">-</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-school"></i> Institution:
+                        </div>
+                        <div class="info-value" id="resultInstitution">-</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-calendar-alt"></i> Test Date:
+                        </div>
+                        <div class="info-value" id="testDate">-</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-clock"></i> Time Taken:
+                        </div>
+                        <div class="info-value" id="timeTaken">-</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-check-circle"></i> Score Details:
+                        </div>
+                        <div class="info-value" id="correctAnswers">-</div>
+                    </div>
+                </div>
+                
+                <div class="controller">
+                    <i class="fas fa-stamp"></i> Exam Controller: Wise Examer
+                </div>
+                
+                <button class="download-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Download Score Card (JPEG)
+                </button>
+                
+                <p style="margin-top: 20px; color: #7f8c8d; font-size: 0.9rem; line-height: 1.4; text-align: center;">
+                    <i class="fas fa-info-circle"></i> This score card is generated by Wise Examer assessment system.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden div for capturing screenshot -->
+    <div id="scoreCardForJPEG" style="display: none;"></div>
+
+    <script>
+        // Student Information and Test State
+        let studentInfo = {};
+        let userAnswers = new Array(30).fill(null);
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        let timerInterval;
+        let testStarted = false;
+        let startTime;
+        let currentQuestionIndex = 0;
+        let selectedQuestions = [];
+        let allQuestions = [];
+
+        // NEET Questions Data - 100 QUESTIONS BANK
+        const questionBank = [
+            // Question 1-30 (Same as before)
+            {
+                number: 1,
+                question: "Which of the following is a fundamental quantity?",
+                options: ["(a) Speed", "(b) Area", "(c) Force", "(d) Mass"],
+                correct: 3
+            },
+            {
+                number: 2,
+                question: "The SI unit of luminous intensity is:",
+                options: ["(a) lux", "(b) candela", "(c) lumen", "(d) watt"],
+                correct: 1
+            },
+            {
+                number: 3,
+                question: "Which of the following is a derived unit?",
+                options: ["(a) Meter", "(b) Kilogram", "(c) Second", "(d) Newton"],
+                correct: 3
+            },
+            {
+                number: 4,
+                question: "The number of significant figures in 0.007 is:",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 0
+            },
+            {
+                number: 5,
+                question: "The dimensional formula for force is:",
+                options: ["(a) [M L T⁻²]", "(b) [M L² T⁻²]", "(c) [M L⁻¹ T⁻²]", "(d) [M L T⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 6,
+                question: "Which of the following is the most precise instrument?",
+                options: [
+                    "(a) Vernier calipers with 20 divisions on the sliding scale",
+                    "(b) A screw gauge of pitch 1 mm and 100 divisions", 
+                    "(c) An optical instrument that can measure length to within a wavelength of light",
+                    "(d) A metre scale"
+                ],
+                correct: 2
+            },
+            {
+                number: 7,
+                question: "The dimensional formula for Planck's constant is:",
+                options: ["(a) [M L² T⁻¹]", "(b) [M L² T⁻²]", "(c) [M L T⁻¹]", "(d) [M L² T]"],
+                correct: 0
+            },
+            {
+                number: 8,
+                question: "The order of magnitude of 0.0071 m is:",
+                options: ["(a) -2", "(b) -3", "(c) -4", "(d) -5"],
+                correct: 0
+            },
+            {
+                number: 9,
+                question: "Which of the following pairs has the same dimensions?",
+                options: ["(a) Work and Power", "(b) Stress and Strain", "(c) Momentum and Impulse", "(d) Force and Pressure"],
+                correct: 2
+            },
+            {
+                number: 10,
+                question: "The error in the measurement of the radius of a sphere is 1%. The error in the measurement of its volume is:",
+                options: ["(a) 1%", "(b) 3%", "(c) 5%", "(d) 7%"],
+                correct: 1
+            },
+            {
+                number: 11,
+                question: "The unit of impulse is the same as that of:",
+                options: ["(a) Momentum", "(b) Force", "(c) Energy", "(d) Power"],
+                correct: 0
+            },
+            {
+                number: 12,
+                question: "Which of the following is dimensionless?",
+                options: ["(a) Gravitational constant", "(b) Planck's constant", "(c) Reynolds number", "(d) Boltzmann constant"],
+                correct: 2
+            },
+            {
+                number: 13,
+                question: "The number of significant figures in 6.032 N m⁻² is:",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 3
+            },
+            {
+                number: 14,
+                question: "The dimensional formula for torque is:",
+                options: ["(a) [M L² T⁻²]", "(b) [M L T⁻²]", "(c) [M L⁻¹ T⁻²]", "(d) [M L⁻² T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 15,
+                question: "Light year is a unit of:",
+                options: ["(a) Time", "(b) Mass", "(c) Distance", "(d) Luminosity"],
+                correct: 2
+            },
+            {
+                number: 16,
+                question: "The dimensions of universal gravitational constant G are:",
+                options: ["(a) [M⁻¹ L³ T⁻²]", "(b) [M L³ T⁻²]", "(c) [M L² T⁻²]", "(d) [M⁻¹ L² T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 17,
+                question: "The mean length of an object is 2.5 cm. Which of the following measurements is most precise?",
+                options: ["(a) 2.4 cm", "(b) 2.45 cm", "(c) 2.449 cm", "(d) 2.49 cm"],
+                correct: 2
+            },
+            {
+                number: 18,
+                question: "The dimensional formula for angular momentum is:",
+                options: ["(a) [M L T⁻¹]", "(b) [M L² T⁻¹]", "(c) [M L² T⁻²]", "(d) [M L⁻¹ T⁻¹]"],
+                correct: 1
+            },
+            {
+                number: 19,
+                question: "A physical quantity is represented by X = Mᵃ Lᵇ Tᶜ. If the percentage errors in the measurement of M, L, and T are α%, β%, and γ% respectively, the total percentage error is:",
+                options: ["(a) (αa + βb + γc)%", "(b) (αa - βb - γc)%", "(c) (α/a + β/b + γ/c)%", "(d) (α + β + γ)%"],
+                correct: 0
+            },
+            {
+                number: 20,
+                question: "The dimensional formula for the modulus of rigidity is:",
+                options: ["(a) [M L⁻¹ T⁻²]", "(b) [M L² T⁻²]", "(c) [M L T⁻²]", "(d) [M L⁻² T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 21,
+                question: "The number 86.425 rounded off to three significant figures is:",
+                options: ["(a) 86.0", "(b) 86.4", "(c) 86.5", "(d) 86.42"],
+                correct: 1
+            },
+            {
+                number: 22,
+                question: "Which of the following is not a fundamental quantity in SI?",
+                options: ["(a) Length", "(b) Temperature", "(c) Amount of substance", "(d) Density"],
+                correct: 3
+            },
+            {
+                number: 23,
+                question: "The dimensions of (1/2)ε₀E² (ε₀ is permittivity of free space and E is electric field) are:",
+                options: ["(a) [M L⁻¹ T⁻²]", "(b) [M L² T⁻²]", "(c) [M L T⁻²]", "(d) [M L⁻² T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 24,
+                question: "The dimensional formula for surface tension is:",
+                options: ["(a) [M L⁰ T⁻²]", "(b) [M L T⁻²]", "(c) [M L² T⁻²]", "(d) [M L⁻¹ T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 25,
+                question: "The unit of the quantity represented by the area under a force-displacement graph is:",
+                options: ["(a) Joule", "(b) Newton", "(c) Watt", "(d) Pascal"],
+                correct: 0
+            },
+            {
+                number: 26,
+                question: "The dimensions of a/b in the equation P = (a - t²)/bx, where P is pressure, x is distance, and t is time, are:",
+                options: ["(a) [M L⁻¹ T⁻²]", "(b) [M L⁰ T⁻²]", "(c) [M L T⁻²]", "(d) [M L² T⁻³]"],
+                correct: 1
+            },
+            {
+                number: 27,
+                question: "The number of significant figures in 100.1 is:",
+                options: ["(a) 4", "(b) 3", "(c) 2", "(d) 1"],
+                correct: 0
+            },
+            {
+                number: 28,
+                question: "The dimensional formula for the universal gas constant R is:",
+                options: ["(a) [M L² T⁻² K⁻¹ mol⁻¹]", "(b) [M L T⁻² K⁻¹]", "(c) [M L² T⁻²]", "(d) [M L² T⁻¹ K⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 29,
+                question: "The percentage error in the measurement of mass and speed are 2% and 3% respectively. The error in the estimate of kinetic energy is:",
+                options: ["(a) 8%", "(b) 2%", "(c) 12%", "(d) 10%"],
+                correct: 0
+            },
+            {
+                number: 30,
+                question: "The dimensions of electrical conductivity are:",
+                options: ["(a) [M⁻¹ L⁻³ T³ A²]", "(b) [M L³ T⁻³ A⁻²]", "(c) [M⁻¹ L² T]", "(d) [M L² T⁻² A⁻¹]"],
+                correct: 0
+            },
+            // Additional Questions 31-100
+            {
+                number: 31,
+                question: "The unit of the coefficient of viscosity in SI is:",
+                options: ["(a) N s m⁻²", "(b) N s⁻¹ m⁻²", "(c) N s m⁻¹", "(d) N s⁻¹ m⁻¹"],
+                correct: 0
+            },
+            {
+                number: 32,
+                question: "The dimensions of (μ₀/ε₀)^(1/2) are:",
+                options: ["(a) [L T⁻¹]", "(b) [M L T⁻² A⁻²]", "(c) [L² T⁻²]", "(d) [M L² T⁻³ A⁻²]"],
+                correct: 1
+            },
+            {
+                number: 33,
+                question: "The number of significant figures in 5.00 × 10⁴ is:",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 2
+            },
+            {
+                number: 34,
+                question: "The dimensional formula for power is:",
+                options: ["(a) [M L² T⁻³]", "(b) [M L T⁻²]", "(c) [M L² T⁻²]", "(d) [M L⁻¹ T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 35,
+                question: "The unit of the Stefan-Boltzmann constant is:",
+                options: ["(a) W m⁻² K⁻⁴", "(b) W m⁻² K⁻¹", "(c) W m⁻¹ K⁻⁴", "(d) W m K⁻⁴"],
+                correct: 0
+            },
+            {
+                number: 36,
+                question: "The dimensions of the magnetic field B are:",
+                options: ["(a) [M T⁻² A⁻¹]", "(b) [M L T⁻² A⁻¹]", "(c) [M T⁻² A⁻²]", "(d) [M L² T⁻² A⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 37,
+                question: "The number 0.006800 has how many significant figures?",
+                options: ["(a) 2", "(b) 3", "(c) 4", "(d) 6"],
+                correct: 2
+            },
+            {
+                number: 38,
+                question: "The dimensional formula for the coefficient of thermal conductivity is:",
+                options: ["(a) [M L T⁻³ K⁻¹]", "(b) [M L² T⁻² K⁻¹]", "(c) [M L T⁻² K⁻¹]", "(d) [M L² T⁻³ K⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 39,
+                question: "Which of the following is not measured in the same units as the others?",
+                options: ["(a) Work", "(b) Energy", "(c) Torque", "(d) Force"],
+                correct: 3
+            },
+            {
+                number: 40,
+                question: "The dimensions of the Planck's constant are the same as that of:",
+                options: ["(a) Energy", "(b) Power", "(c) Angular momentum", "(d) Frequency"],
+                correct: 2
+            },
+            // Questions 41-70
+            {
+                number: 41,
+                question: "The error in the measurement of the length and radius of a cylinder are 1% and 2% respectively. The error in the measurement of its volume is:",
+                options: ["(a) 3%", "(b) 5%", "(c) 7%", "(d) 8%"],
+                correct: 1
+            },
+            {
+                number: 42,
+                question: "The dimensional formula for the Boltzmann constant is:",
+                options: ["(a) [M L² T⁻² K⁻¹]", "(b) [M L T⁻² K⁻¹]", "(c) [M L² T⁻¹ K⁻¹]", "(d) [M L T⁻¹ K⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 43,
+                question: "The unit of the electric flux is:",
+                options: ["(a) N C⁻¹", "(b) N m C⁻¹", "(c) V m", "(d) V m⁻¹"],
+                correct: 2
+            },
+            {
+                number: 44,
+                question: "The number of significant figures in 200.0 is:",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 3
+            },
+            {
+                number: 45,
+                question: "The dimensions of the magnetic flux are:",
+                options: ["(a) [M L² T⁻² A⁻¹]", "(b) [M L T⁻² A⁻¹]", "(c) [M L² T⁻¹ A⁻²]", "(d) [M L T⁻¹ A⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 46,
+                question: "The unit of the permittivity of free space ε₀ is:",
+                options: ["(a) C² N⁻¹ m⁻²", "(b) N C⁻² m⁻²", "(c) C² N m⁻²", "(d) C² N⁻¹ m²"],
+                correct: 0
+            },
+            {
+                number: 47,
+                question: "The dimensional formula for the capacitance is:",
+                options: ["(a) [M⁻¹ L⁻² T⁴ A²]", "(b) [M L² T⁻³ A⁻¹]", "(c) [M⁻¹ L⁻² T³ A]", "(d) [M L T⁻² A⁻²]"],
+                correct: 0
+            },
+            {
+                number: 48,
+                question: "The number 7.45 rounded off to two significant figures is:",
+                options: ["(a) 7.4", "(b) 7.5", "(c) 7.0", "(d) 74"],
+                correct: 0
+            },
+            {
+                number: 49,
+                question: "The dimensions of the self-inductance are:",
+                options: ["(a) [M L² T⁻² A⁻²]", "(b) [M L T⁻² A⁻²]", "(c) [M L² T⁻¹ A⁻¹]", "(d) [M L T⁻¹ A⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 50,
+                question: "The unit of the reactance is:",
+                options: ["(a) Ohm", "(b) Henry", "(c) Farad", "(d) Siemens"],
+                correct: 0
+            },
+            // Questions 51-80
+            {
+                number: 51,
+                question: "The dimensional formula for the resistance is:",
+                options: ["(a) [M L² T⁻³ A⁻²]", "(b) [M L² T⁻² A⁻²]", "(c) [M L T⁻² A⁻¹]", "(d) [M L² T⁻¹ A⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 52,
+                question: "The number of significant figures in 6.020 × 10²³ is:",
+                options: ["(a) 3", "(b) 4", "(c) 23", "(d) 26"],
+                correct: 1
+            },
+            {
+                number: 53,
+                question: "The dimensions of the electric field are:",
+                options: ["(a) [M L T⁻³ A⁻¹]", "(b) [M L² T⁻³ A⁻¹]", "(c) [M L T⁻² A⁻¹]", "(d) [M L² T⁻² A⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 54,
+                question: "The unit of the magnetic permeability is:",
+                options: ["(a) H m⁻¹", "(b) N A⁻²", "(c) T m A⁻¹", "(d) All of these"],
+                correct: 3
+            },
+            {
+                number: 55,
+                question: "The dimensional formula for the luminous flux is:",
+                options: ["(a) [M L² T⁻³]", "(b) [J]", "(c) [cd sr]", "(d) [cd]"],
+                correct: 2
+            },
+            {
+                number: 56,
+                question: "The number 0.00200 has how many significant figures?",
+                options: ["(a) 6", "(b) 3", "(c) 2", "(d) 1"],
+                correct: 1
+            },
+            {
+                number: 57,
+                question: "The dimensions of the stress are:",
+                options: ["(a) [M L⁻¹ T⁻²]", "(b) [M L T⁻²]", "(c) [M L² T⁻²]", "(d) [M L⁻² T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 58,
+                question: "The unit of the activity of a radioactive sample is:",
+                options: ["(a) Curie", "(b) Rutherford", "(c) Becquerel", "(d) All of these"],
+                correct: 3
+            },
+            {
+                number: 59,
+                question: "The dimensional formula for the couple is:",
+                options: ["(a) [M L² T⁻²]", "(b) [M L T⁻²]", "(c) [M L⁻¹ T⁻²]", "(d) [M L² T⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 60,
+                question: "The number 5000 has how many significant figures?",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 0
+            },
+            // Questions 61-90
+            {
+                number: 61,
+                question: "The dimensions of the moment of inertia are:",
+                options: ["(a) [M L²]", "(b) [M L T⁻²]", "(c) [M L² T⁻¹]", "(d) [M L⁻²]"],
+                correct: 0
+            },
+            {
+                number: 62,
+                question: "The unit of the gravitational potential is:",
+                options: ["(a) J kg⁻¹", "(b) N m kg⁻¹", "(c) m² s⁻²", "(d) All of these"],
+                correct: 3
+            },
+            {
+                number: 63,
+                question: "The dimensional formula for the latent heat is:",
+                options: ["(a) [M⁰ L² T⁻²]", "(b) [M L T⁻²]", "(c) [M L² T⁻¹]", "(d) [M L⁻¹ T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 64,
+                question: "The number 0.00050 has how many significant figures?",
+                options: ["(a) 2", "(b) 3", "(c) 4", "(d) 6"],
+                correct: 0
+            },
+            {
+                number: 65,
+                question: "The dimensions of the coefficient of friction are:",
+                options: ["(a) [M L T⁻²]", "(b) [M⁰ L⁰ T⁰]", "(c) [M L² T⁻²]", "(d) [M L⁻¹ T⁻²]"],
+                correct: 1
+            },
+            {
+                number: 66,
+                question: "The unit of the surface tension is:",
+                options: ["(a) N m⁻¹", "(b) J m⁻²", "(c) Both (a) and (b)", "(d) N m⁻²"],
+                correct: 2
+            },
+            {
+                number: 67,
+                question: "The dimensional formula for the frequency is:",
+                options: ["(a) [M⁰ L⁰ T⁻¹]", "(b) [M L T⁻¹]", "(c) [M L² T⁻¹]", "(d) [M⁰ L⁰ T]"],
+                correct: 0
+            },
+            {
+                number: 68,
+                question: "The number 8.00 has how many significant figures?",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 2
+            },
+            {
+                number: 69,
+                question: "The dimensions of the specific heat capacity are:",
+                options: ["(a) [M⁰ L² T⁻² K⁻¹]", "(b) [M L T⁻² K⁻¹]", "(c) [M L² T⁻² K⁻¹]", "(d) [M L⁻¹ T⁻² K⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 70,
+                question: "The unit of the Planck's constant is:",
+                options: ["(a) J s", "(b) kg m² s⁻¹", "(c) Both (a) and (b)", "(d) N m s"],
+                correct: 2
+            },
+            // Questions 71-100
+            {
+                number: 71,
+                question: "The dimensional formula for the angular velocity is:",
+                options: ["(a) [M⁰ L⁰ T⁻¹]", "(b) [M L T⁻¹]", "(c) [M L² T⁻¹]", "(d) [M⁰ L T⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 72,
+                question: "The number 100.00 has how many significant figures?",
+                options: ["(a) 2", "(b) 3", "(c) 5", "(d) 6"],
+                correct: 2
+            },
+            {
+                number: 73,
+                question: "The dimensions of the strain are:",
+                options: ["(a) [M⁰ L⁰ T⁰]", "(b) [M L T⁻²]", "(c) [M L⁻¹ T⁻²]", "(d) [M L² T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 74,
+                question: "The unit of the modulus of elasticity is:",
+                options: ["(a) N m⁻²", "(b) Pa", "(c) Both (a) and (b)", "(d) N m"],
+                correct: 2
+            },
+            {
+                number: 75,
+                question: "The dimensional formula for the velocity gradient is:",
+                options: ["(a) [M⁰ L⁰ T⁻¹]", "(b) [M L T⁻¹]", "(c) [M⁰ L⁻¹ T⁰]", "(d) [M⁰ L⁰ T⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 76,
+                question: "The number 0.0010 has how many significant figures?",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 1
+            },
+            {
+                number: 77,
+                question: "The dimensions of the coefficient of viscosity are:",
+                options: ["(a) [M L⁻¹ T⁻¹]", "(b) [M L T⁻¹]", "(c) [M L⁻¹ T⁻²]", "(d) [M L² T⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 78,
+                question: "The unit of the magnetic susceptibility is:",
+                options: ["(a) Dimensionless", "(b) H m⁻¹", "(c) T A⁻¹ m⁻¹", "(d) N A⁻²"],
+                correct: 0
+            },
+            {
+                number: 79,
+                question: "The dimensional formula for the intensity of wave is:",
+                options: ["(a) [M L⁰ T⁻³]", "(b) [M L² T⁻³]", "(c) [M T⁻³]", "(d) [M L⁻¹ T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 80,
+                question: "The number 9.00 × 10³ has how many significant figures?",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 2
+            },
+            // Last 20 questions
+            {
+                number: 81,
+                question: "The dimensions of the solar constant are:",
+                options: ["(a) [M T⁻³]", "(b) [M L² T⁻³]", "(c) [M L⁰ T⁻³]", "(d) [M L⁻² T⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 82,
+                question: "The unit of the thermal conductivity is:",
+                options: ["(a) W m⁻¹ K⁻¹", "(b) J m⁻¹ s⁻¹ K⁻¹", "(c) Both (a) and (b)", "(d) W m K⁻¹"],
+                correct: 2
+            },
+            {
+                number: 83,
+                question: "The dimensional formula for the molar specific heat capacity is:",
+                options: ["(a) [M L² T⁻² K⁻¹ mol⁻¹]", "(b) [M L T⁻² K⁻¹ mol⁻¹]", "(c) [M L² T⁻² K⁻¹]", "(d) [M L² T⁻¹ K⁻¹ mol⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 84,
+                question: "The number 0.02050 has how many significant figures?",
+                options: ["(a) 6", "(b) 4", "(c) 3", "(d) 2"],
+                correct: 1
+            },
+            {
+                number: 85,
+                question: "The dimensions of the universal gas constant R are the same as that of:",
+                options: ["(a) Work", "(b) Energy", "(c) Specific heat", "(d) Molar specific heat"],
+                correct: 3
+            },
+            {
+                number: 86,
+                question: "The unit of the electric dipole moment is:",
+                options: ["(a) C m", "(b) Debye", "(c) Both (a) and (b)", "(d) N C⁻¹"],
+                correct: 2
+            },
+            {
+                number: 87,
+                question: "The dimensional formula for the compressibility is:",
+                options: ["(a) [M⁻¹ L T²]", "(b) [M L⁻¹ T⁻²]", "(c) [M⁻¹ L⁻¹ T²]", "(d) [M L T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 88,
+                question: "The number 600.0 has how many significant figures?",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 3
+            },
+            {
+                number: 89,
+                question: "The dimensions of the permittivity of free space are:",
+                options: ["(a) [M⁻¹ L⁻³ T⁴ A²]", "(b) [M L⁻³ T⁴ A²]", "(c) [M⁻¹ L⁻² T³ A]", "(d) [M L T⁻² A⁻²]"],
+                correct: 0
+            },
+            {
+                number: 90,
+                question: "The unit of the magnetic dipole moment is:",
+                options: ["(a) A m²", "(b) J T⁻¹", "(c) Both (a) and (b)", "(d) N m T⁻¹"],
+                correct: 2
+            },
+            // Last 10 questions
+            {
+                number: 91,
+                question: "The dimensional formula for the magnetic susceptibility is:",
+                options: ["(a) [M⁰ L⁰ T⁰ A⁰]", "(b) [M L T⁻² A⁻²]", "(c) [M L² T⁻² A⁻²]", "(d) [M L T⁻¹ A⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 92,
+                question: "The number 0.001 has how many significant figures?",
+                options: ["(a) 1", "(b) 2", "(c) 3", "(d) 4"],
+                correct: 0
+            },
+            {
+                number: 93,
+                question: "The dimensions of the Rydberg constant are:",
+                options: ["(a) [M⁰ L⁻¹ T⁰]", "(b) [M L T⁻¹]", "(c) [M⁰ L⁰ T⁻¹]", "(d) [M L² T⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 94,
+                question: "The unit of the decay constant is:",
+                options: ["(a) s⁻¹", "(b) year⁻¹", "(c) Both (a) and (b)", "(d) m s⁻¹"],
+                correct: 2
+            },
+            {
+                number: 95,
+                question: "The dimensional formula for the inductance is:",
+                options: ["(a) [M L² T⁻² A⁻²]", "(b) [M L T⁻² A⁻²]", "(c) [M L² T⁻¹ A⁻¹]", "(d) [M L T⁻¹ A⁻¹]"],
+                correct: 0
+            },
+            {
+                number: 96,
+                question: "Which physical quantity has the same unit as that of impulse?",
+                options: ["(a) Force", "(b) Momentum", "(c) Power", "(d) Energy"],
+                correct: 1
+            },
+            {
+                number: 97,
+                question: "The dimensional formula for pressure is same as that of:",
+                options: ["(a) Stress", "(b) Strain", "(c) Force", "(d) Thrust"],
+                correct: 0
+            },
+            {
+                number: 98,
+                question: "The unit of angular momentum is:",
+                options: ["(a) kg m²/s", "(b) kg m/s²", "(c) kg m/s", "(d) kg m²/s²"],
+                correct: 0
+            },
+            {
+                number: 99,
+                question: "The dimensions of power are:",
+                options: ["(a) [ML²T⁻³]", "(b) [MLT⁻²]", "(c) [ML²T⁻²]", "(d) [ML⁻¹T⁻²]"],
+                correct: 0
+            },
+            {
+                number: 100,
+                question: "Which of the following is not a unit of energy?",
+                options: ["(a) Joule", "(b) Watt-hour", "(c) Electron-volt", "(d) Watt"],
+                correct: 3
+            }
+        ];
+
+        // DOM Elements
+        const studentForm = document.getElementById('studentForm');
+        const testSection = document.getElementById('testSection');
+        const resultSection = document.getElementById('resultSection');
+        const timerElement = document.getElementById('timer');
+        const timeElement = document.getElementById('time');
+        const startTestBtn = document.getElementById('startTest');
+        const submitTestBtn = document.getElementById('submitTest');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const progressBar = document.getElementById('progressBar');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const currentQuestionElement = document.getElementById('currentQuestion');
+        const questionCounter = document.getElementById('questionCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // Result elements
+        const finalScoreElement = document.getElementById('finalScore');
+        const resultNameElement = document.getElementById('resultName');
+        const resultClassElement = document.getElementById('resultClass');
+        const resultRollElement = document.getElementById('resultRoll');
+        const resultInstitutionElement = document.getElementById('resultInstitution');
+        const testDateElement = document.getElementById('testDate');
+        const timeTakenElement = document.getElementById('timeTaken');
+        const correctAnswersElement = document.getElementById('correctAnswers');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const scoreCardForJPEG = document.getElementById('scoreCardForJPEG');
+
+        // Event Listeners
+        startTestBtn.addEventListener('click', startTest);
+        submitTestBtn.addEventListener('click', submitTest);
+        downloadBtn.addEventListener('click', downloadScoreCardJPEG);
+
+        // Function to select 30 random questions from 100
+        function selectRandomQuestions() {
+            // Create a copy of the question bank
+            const allQuestionsCopy = [...questionBank];
+            selectedQuestions = [];
+            
+            // Shuffle the questions using Fisher-Yates algorithm
+            for (let i = allQuestionsCopy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allQuestionsCopy[i], allQuestionsCopy[j]] = [allQuestionsCopy[j], allQuestionsCopy[i]];
+            }
+            
+            // Take first 30 questions
+            selectedQuestions = allQuestionsCopy.slice(0, 30);
+            
+            // Update question numbers to 1-30
+            selectedQuestions.forEach((q, index) => {
+                q.displayNumber = index + 1;
+            });
+            
+            return selectedQuestions;
+        }
+
+        // Start the test
+        function startTest() {
+            // Get student information
+            const name = document.getElementById('studentName').value.trim();
+            const studentClass = document.getElementById('studentClass').value.trim();
+            const rollNo = document.getElementById('rollNo').value.trim();
+            const institution = document.getElementById('institution').value.trim();
+            
+            // Validate form
+            if (!name || !studentClass || !rollNo || !institution) {
+                alert("Please fill all required fields (Name, Class, Roll No, Institution)");
+                return;
+            }
+            
+            // Save student information
+            studentInfo = {
+                name: name,
+                class: studentClass,
+                rollNo: rollNo,
+                institution: institution,
+                email: document.getElementById('email').value.trim(),
+                startTime: new Date()
+            };
+            
+            // Select random questions
+            allQuestions = selectRandomQuestions();
+            
+            // Reset answers array
+            userAnswers = new Array(allQuestions.length).fill(null);
+            
+            // Hide form, show test section and timer
+            studentForm.style.display = 'none';
+            testSection.style.display = 'block';
+            timerElement.style.display = 'block';
+            
+            // Start timer
+            startTimer();
+            
+            // Load first question
+            loadQuestion(0);
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+            
+            // Record start time
+            startTime = new Date();
+            testStarted = true;
+        }
+
+        // Timer function
+        function startTimer() {
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                    alert("Time's up! Your test has been auto-submitted.");
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timeElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Change color when less than 5 minutes
+            if (timeLeft < 300) {
+                timerElement.style.background = "linear-gradient(90deg, #ff416c, #ff4b2b)";
+            }
+        }
+
+        // Load a specific question
+        function loadQuestion(index) {
+            questionsContainer.innerHTML = '';
+            currentQuestionIndex = index;
+            
+            const q = allQuestions[index];
+            
+            const questionBox = document.createElement('div');
+            questionBox.className = 'question-box';
+            questionBox.id = `question-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((option, optIndex) => {
+                const isSelected = userAnswers[index] === optIndex;
+                optionsHTML += `
+                    <div class="option ${isSelected ? 'selected' : ''}" onclick="selectOption(${index}, ${optIndex})">
+                        <input type="radio" name="q${index}" id="q${index}o${optIndex}" ${isSelected ? 'checked' : ''}>
+                        <label for="q${index}o${optIndex}">${option}</label>
+                    </div>
+                `;
+            });
+            
+            questionBox.innerHTML = `
+                <div class="question-number">
+                    <span>Question ${q.displayNumber}</span>
+                    <span>Marks: 1</span>
+                </div>
+                <div class="question-text">${q.question}</div>
+                <div class="options">
+                    ${optionsHTML}
+                </div>
+            `;
+            
+            questionsContainer.appendChild(questionBox);
+            
+            // Update question counter
+            currentQuestionElement.textContent = q.displayNumber;
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Scroll to top of question
+            window.scrollTo(0, 0);
+        }
+
+        // Select option
+        window.selectOption = function(questionIndex, optionIndex) {
+            // Update user answer
+            userAnswers[questionIndex] = optionIndex;
+            
+            // Reload question to show selection
+            loadQuestion(questionIndex);
+            
+            // Update progress bar
+            updateProgressBar();
+        }
+
+        // Next question
+        window.nextQuestion = function() {
+            if (currentQuestionIndex < allQuestions.length - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+                updateNavigationButtons();
+            }
+        }
+
+        // Previous question
+        window.previousQuestion = function() {
+            if (currentQuestionIndex > 0) {
+                loadQuestion(currentQuestionIndex - 1);
+                updateNavigationButtons();
+            }
+        }
+
+        // Update navigation buttons
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = currentQuestionIndex === allQuestions.length - 1;
+            
+            // Update submit button text on last question
+            if (currentQuestionIndex === allQuestions.length - 1) {
+                submitTestBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Test';
+            } else {
+                submitTestBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Test';
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const answered = userAnswers.filter(answer => answer !== null).length;
+            const progress = (answered / allQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Submit test
+        function submitTest() {
+            if (!testStarted) return;
+            
+            clearInterval(timerInterval);
+            
+            // Calculate score
+            let score = 0;
+            allQuestions.forEach((q, index) => {
+                if (userAnswers[index] === q.correct) {
+                    score++;
+                }
+            });
+            
+            // Calculate percentage
+            const percentage = Math.round((score / allQuestions.length) * 100);
+            
+            // Calculate time taken
+            const endTime = new Date();
+            const timeTakenMs = endTime - startTime;
+            const timeTakenMinutes = Math.floor(timeTakenMs / 60000);
+            const timeTakenSeconds = Math.floor((timeTakenMs % 60000) / 1000);
+            
+            // Hide test section, show result section
+            testSection.style.display = 'none';
+            timerElement.style.display = 'none';
+            resultSection.style.display = 'block';
+            
+            // Display results
+            finalScoreElement.textContent = percentage;
+            resultNameElement.textContent = studentInfo.name;
+            resultClassElement.textContent = studentInfo.class;
+            resultRollElement.textContent = studentInfo.rollNo;
+            resultInstitutionElement.textContent = studentInfo.institution;
+            correctAnswersElement.textContent = `${score} correct out of ${allQuestions.length} questions`;
+            
+            // Format and display date
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            testDateElement.textContent = endTime.toLocaleDateString('en-US', options);
+            
+            // Format and display time taken
+            timeTakenElement.textContent = `${timeTakenMinutes}m ${timeTakenSeconds}s`;
+            
+            // Update score circle gradient
+            updateScoreCircle(percentage);
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Update score circle gradient
+        function updateScoreCircle(percentage) {
+            const scoreCircle = document.querySelector('.score-circle');
+            let color = '#27ae60'; // Green by default
+            
+            if (percentage < 40) color = '#e74c3c'; // Red
+            else if (percentage < 60) color = '#f39c12'; // Orange
+            else if (percentage < 80) color = '#3498db'; // Blue
+            
+            scoreCircle.style.background = `conic-gradient(${color} 0% ${percentage}%, #e0e0e0 ${percentage}% 100%)`;
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f1c40f', '#9b59b6'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    {
+                        transform: 'translateY(-100vh) rotate(0deg)',
+                        opacity: 1
+                    },
+                    {
+                        transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: 2000 + Math.random() * 3000,
+                    easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                });
+                
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+
+        // Download Score Card as JPEG
+        function downloadScoreCardJPEG() {
+            // Show loading overlay
+            loadingOverlay.style.display = 'flex';
+            
+            // Disable download button
+            downloadBtn.disabled = true;
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            // Create score card HTML for JPEG
+            const scoreCardHTML = `
+                <div style="
+                    width: 800px;
+                    padding: 50px;
+                    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+                    border-radius: 25px;
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+                    font-family: 'Poppins', sans-serif;
+                    position: relative;
+                    overflow: hidden;
+                ">
+                    <!-- Header -->
+                    <h2 style="
+                        color: #2c3e50;
+                        font-size: 2.8rem;
+                        margin-bottom: 40px;
+                        text-align: center;
+                    ">
+                        <i class="fas fa-award"></i> Assessment Score Card
+                    </h2>
+                    
+                    <!-- Score Circle -->
+                    <div style="
+                        width: 220px;
+                        height: 220px;
+                        margin: 0 auto 40px;
+                    ">
+                        <div style="
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            background: conic-gradient(#27ae60 0% ${finalScoreElement.textContent}%, #e0e0e0 ${finalScoreElement.textContent}% 100%);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        ">
+                            <div style="
+                                width: 180px;
+                                height: 180px;
+                                border-radius: 50%;
+                                background: white;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
+                            ">
+                                <div style="
+                                    font-size: 4.5rem;
+                                    font-weight: bold;
+                                    background: linear-gradient(135deg, #27ae60, #219653);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                ">
+                                    ${finalScoreElement.textContent}
+                                </div>
+                                <div style="font-size: 1.8rem; color: #27ae60; font-weight: 600; margin-top: 5px;">
+                                    %
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Student Info -->
+                    <div style="
+                        background: #f8f9fa;
+                        padding: 30px;
+                        border-radius: 15px;
+                        margin-bottom: 30px;
+                    ">
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+                            <div style="font-weight: 600; color: #2c3e50;">Student Name:</div>
+                            <div style="color: #34495e;">${resultNameElement.textContent}</div>
+                        </div>
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+                            <div style="font-weight: 600; color: #2c3e50;">Class:</div>
+                            <div style="color: #34495e;">${resultClassElement.textContent}</div>
+                        </div>
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+                            <div style="font-weight: 600; color: #2c3e50;">Roll Number:</div>
+                            <div style="color: #34495e;">${resultRollElement.textContent}</div>
+                        </div>
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+                            <div style="font-weight: 600; color: #2c3e50;">Institution:</div>
+                            <div style="color: #34495e;">${resultInstitutionElement.textContent}</div>
+                        </div>
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+                            <div style="font-weight: 600; color: #2c3e50;">Test Date:</div>
+                            <div style="color: #34495e;">${testDateElement.textContent}</div>
+                        </div>
+                        <div style="margin-bottom: 15px; display: flex; justify-content: space-between;">
+                            <div style="font-weight: 600; color: #2c3e50;">Time Taken:</div>
+                            <div style="color: #34495e;">${timeTakenElement.textContent}</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="font-weight: 600; color: #2c3e50;">Score:</div>
+                            <div style="color: #34495e;">${correctAnswersElement.textContent}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div style="
+                        text-align: center;
+                        color: #7f8c8d;
+                        font-style: italic;
+                        margin-top: 30px;
+                        padding-top: 20px;
+                        border-top: 2px solid #e8f4fc;
+                    ">
+                        Exam Controller: Wise Examer
+                    </div>
+                    <div style="text-align: center; color: #95a5a6; margin-top: 10px; font-size: 0.9rem;">
+                        This score card is generated by Wise Examer assessment system.
+                    </div>
+                </div>
+            `;
+            
+            // Set the HTML content
+            scoreCardForJPEG.innerHTML = scoreCardHTML;
+            scoreCardForJPEG.style.display = 'block';
+            
+            // Wait for rendering
+            setTimeout(() => {
+                // Use html2canvas to capture the screenshot
+                html2canvas(scoreCardForJPEG, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    allowTaint: false
+                }).then(canvas => {
+                    // Convert canvas to JPEG
+                    const jpegUrl = canvas.toDataURL('image/jpeg', 0.95);
+                    
+                    // Create a download link
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = jpegUrl;
+                    const fileName = `WiseExamer_ScoreCard_${studentInfo.name.replace(/\s+/g, '_')}_${new Date().getTime()}.jpg`;
+                    downloadLink.download = fileName;
+                    
+                    // Trigger download
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    
+                    // Hide the temporary div
+                    scoreCardForJPEG.style.display = 'none';
+                    scoreCardForJPEG.innerHTML = '';
+                    
+                    // Hide loading overlay
+                    loadingOverlay.style.display = 'none';
+                    
+                    // Restore button
+                    downloadBtn.innerHTML = originalText;
+                    downloadBtn.disabled = false;
+                    
+                    // Show success message
+                    alert(`✅ Score card downloaded successfully as ${fileName}`);
+                }).catch(error => {
+                    console.error('Error generating JPEG:', error);
+                    
+                    // Hide loading overlay
+                    loadingOverlay.style.display = 'none';
+                    
+                    // Restore button
+                    downloadBtn.innerHTML = originalText;
+                    downloadBtn.disabled = false;
+                    
+                    // Hide the temporary div
+                    scoreCardForJPEG.style.display = 'none';
+                    scoreCardForJPEG.innerHTML = '';
+                    
+                    // Show error message
+                    alert("❌ Error generating JPEG. Please try again.");
+                });
+            }, 1000);
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus on first input field
+            document.getElementById('studentName').focus();
+        });
+    </script>
+</body>
+</html>
